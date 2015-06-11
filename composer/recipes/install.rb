@@ -7,6 +7,15 @@ node[:deploy].each do |application, deploy|
     interpreter "bash"
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
+    if deploy[:scm]
+      ensure_scm_package_installed(deploy[:scm][:scm_type])
+      prepare_git_checkouts(
+        :user => deploy[:user],
+        :group => deploy[:group],
+        :home => deploy[:home],
+        :ssh_key => deploy[:scm][:ssh_key]
+      ) if deploy[:scm][:scm_type].to_s == 'git'
+    end
     code <<-EOH
     curl -s https://getcomposer.org/installer | php
     php composer.phar install --no-dev --no-interaction --optimize-autoloader
