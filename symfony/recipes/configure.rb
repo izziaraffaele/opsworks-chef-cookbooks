@@ -5,12 +5,13 @@
 node[:deploy].each do |application, deploy|
 
   # Set ACL rules to give proper permission to cache and logs
-  script "make_tmp_folders" do
+  script "framework_configure" do
     interpreter "bash"
     user "root"
     cwd "#{deploy[:deploy_to]}/current/tmp"
     code <<-EOH
-    mkdir -p database, cache
+    mkdir -p database cache
+    php vendor/bin/doctrine orm:generate-proxies
     EOH
   end
 
