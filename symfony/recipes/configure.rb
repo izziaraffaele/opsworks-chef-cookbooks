@@ -5,7 +5,22 @@
 node[:deploy].each do |application, deploy|
 
   # Set ACL rules to give proper permission to cache and logs
-  script "framework_configure" do
+  # script "before_composer" do
+  #   interpreter "bash"
+  #   user "root"
+  #   cwd "#{deploy[:deploy_to]}/current/tmp"
+  #   code <<-EOH
+    
+  #   EOH
+  # end
+
+  # Create the parameters.yml file.
+  include_recipe 'symfony::paramconfig'
+
+  # Install dependencies using composer install
+  include_recipe 'composer::install'
+
+  script "after_composer" do
     interpreter "bash"
     user "root"
     cwd "#{deploy[:deploy_to]}/current/tmp"
@@ -14,11 +29,4 @@ node[:deploy].each do |application, deploy|
     php vendor/bin/doctrine orm:generate-proxies
     EOH
   end
-
-  # Create the parameters.yml file.
-  include_recipe 'symfony::paramconfig'
-
-  # Install dependencies using composer install
-  include_recipe 'composer::install'
-
 end
