@@ -15,7 +15,7 @@ node[:deploy].each do |application, deploy|
       :host => (deploy[:database][:host] rescue nil),
       :user => (deploy[:database][:username] rescue nil),
       :password => (deploy[:database][:password] rescue nil),
-      :dbname => (deploy[:database][:dbname] rescue nil),
+      :dbname => (deploy[:database][:database] rescue nil),
       :parameters => (node[:custom_env]  rescue nil), 
       :application => ("#{application}"  rescue nil) 
     )
