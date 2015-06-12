@@ -23,9 +23,9 @@ node[:deploy].each do |application, deploy|
   script "after_composer" do
     interpreter "bash"
     user "root"
-    cwd "#{deploy[:deploy_to]}/current/tmp"
+    cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    mkdir -p database cache
+    mkdir -p tmp/database tmp/cache
     php vendor/bin/doctrine orm:generate-proxies
     EOH
   end
