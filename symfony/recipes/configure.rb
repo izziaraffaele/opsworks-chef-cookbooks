@@ -5,15 +5,12 @@
 node[:deploy].each do |application, deploy|
 
   # Set ACL rules to give proper permission to cache and logs
-  script "update_acl" do
+  script "make_tmp_folders" do
     interpreter "bash"
     user "root"
-    cwd "#{deploy[:deploy_to]}/current"
+    cwd "#{deploy[:deploy_to]}/current/tmp"
     code <<-EOH
-    mkdir -p storage
-    mount -o remount,acl /srv/www 
-    setfacl -R -m u:www-data:rwX -m u:ubuntu:rwX storage
-    setfacl -dR -m u:www-data:rwx -m u:ubuntu:rwx storage
+    mkdir -p database, cache
     EOH
   end
 
@@ -22,15 +19,5 @@ node[:deploy].each do |application, deploy|
 
   # Install dependencies using composer install
   include_recipe 'composer::install'
-
-  # Clear and warm-up Symfony cache if warmup_cache option is defined in the application configuration
-  if node[:custom_env][application.to_s].has_key?("warmup_cache")
-      execute 'clear_symfony_cache_prod' do
-        user    "root"
-        cwd     "#{deploy[:deploy_to]}/current"
-        command "php app/console cache:clear --env=prod --no-debug"
-        action :run
-      end
-  end
 
 end
