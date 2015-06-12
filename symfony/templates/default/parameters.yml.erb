@@ -1,5 +1,9 @@
 # Parameter values for application <%= @application %>
 parameters:
-<% @parameters[@application.to_s][:parameters].sort.each do | param_value | %> 
-    <%= param_value %> 
+    database_host: <% @database[:host] %> 
+    database_dbname: <% @database[:database] %> 
+    database_user: <% @database[:username] %> 
+    database_password: <% @database[:password] %> 
+<% @parameters.each do | param_name, param_value | %> 
+    <%= param_name %>: "<%= param_value %>"
 <% end %>
