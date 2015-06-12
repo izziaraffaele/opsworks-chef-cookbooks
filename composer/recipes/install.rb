@@ -40,8 +40,8 @@ node[:deploy].each do |application, deploy|
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    ssh-add #{deploy[:home]}/.ssh/id_dsa
     eval `ssh-agent`
+    ssh-add #{deploy[:home]}/.ssh/id_dsa
     curl -s https://getcomposer.org/installer | php
     php composer.phar install --no-dev --no-interaction --optimize-autoloader
     EOH
