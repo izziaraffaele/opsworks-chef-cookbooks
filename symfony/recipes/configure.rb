@@ -25,7 +25,7 @@ node[:deploy].each do |application, deploy|
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    mkdir -p tmp/database tmp/cache tmp/supervisord
+    mkdir -p tmp/database tmp/cache tmp/supervisord tmp/logs
     php vendor/bin/doctrine orm:generate-proxies
     EOH
   end
