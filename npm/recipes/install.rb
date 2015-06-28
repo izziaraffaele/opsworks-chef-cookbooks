@@ -6,7 +6,7 @@
 node[:deploy].each do |application, deploy|
   script "install_composer" do
     interpreter "bash"
-    user "root"
+    user deploy[:user]
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
     npm install 
