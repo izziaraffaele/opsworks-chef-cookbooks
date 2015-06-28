@@ -4,9 +4,17 @@
 #
 
 node[:deploy].each do |application, deploy|
+  script "after_composer" do
+    interpreter "bash"
+    user "root"
+    cwd "#{deploy[:deploy_to]}/current"
+    code <<-EOH
+    mkdir -p node_modules
+    EOH
+  end
   script "install_composer" do
     interpreter "bash"
-    user deploy[:user]
+    user "root"
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
     npm install 
