@@ -5,12 +5,12 @@ node[:deploy].each do |application, deploy|
   include_recipe 'composer::install'
 
   # correct permissions to allow apache to write
-  execute "chown #{deploy[:deploy_to]}/app/storage" do
-      cwd "#{deploy[:deploy_to]}/app/storage"
-      command "chown -R deploy.www-data ."
+  execute "chown #{deploy[:deploy_to]}/storage" do
+      cwd "#{deploy[:deploy_to]}/storage"
+      command "chown -R  ."
   end
-  execute "chmod #{deploy[:deploy_to]}/app/storage" do
-      cwd "#{deploy[:deploy_to]}/app/storage"
+  execute "chmod #{deploy[:deploy_to]}/storage" do
+      cwd "#{deploy[:deploy_to]}/storage"
       command "chmod -R u+rwX,g+rwX ."
   end
 end
