@@ -43,7 +43,7 @@ node[:deploy].each do |application, deploy|
     eval `ssh-agent`
     ssh-add #{deploy[:home]}/.ssh/id_dsa
     curl -s https://getcomposer.org/installer | php
-    php composer.phar install --no-dev --no-interaction --optimize-autoloader
+    php composer.phar install --no-dev --no-interaction --optimize-autoloader --prefer-source
     EOH
     only_if { ::File.exists?("#{deploy[:deploy_to]}/current/composer.json") }
   end
