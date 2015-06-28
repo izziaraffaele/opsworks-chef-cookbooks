@@ -7,7 +7,7 @@ node[:deploy].each do |application, deploy|
   # correct permissions to allow apache to write
   execute "chown #{deploy[:deploy_to]}/current/storage" do
       cwd "#{deploy[:deploy_to]}/current/storage"
-      command "chown -R  ."
+      command "chown -R deploy.www-data ."
   end
   execute "chmod #{deploy[:deploy_to]}/current/storage" do
       cwd "#{deploy[:deploy_to]}/current/storage"
@@ -17,7 +17,7 @@ node[:deploy].each do |application, deploy|
   # correct permissions to allow apache to write
   execute "chown #{deploy[:deploy_to]}/current/bootstrap/cache" do
       cwd "#{deploy[:deploy_to]}/current/bootstrap/cache"
-      command "chown -R  ."
+      command "chown -R deploy.www-data ."
   end
   execute "chmod #{deploy[:deploy_to]}/current/bootstrap/cache" do
       cwd "#{deploy[:deploy_to]}/current/bootstrap/cache"
