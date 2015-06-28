@@ -23,4 +23,10 @@ node[:deploy].each do |application, deploy|
       cwd "#{deploy[:deploy_to]}/current/bootstrap/cache"
       command "chmod -R u+rwX,g+rwX ."
   end
+
+  # correct permissions to allow apache to write
+  execute "rename .env.production" do
+      cwd "#{deploy[:deploy_to]}/current"
+      command "cp .env.production .env"
+  end
 end
