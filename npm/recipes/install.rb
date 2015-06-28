@@ -4,7 +4,7 @@
 #
 
 node[:deploy].each do |application, deploy|
-  script "after_composer" do
+  script "make node_modules" do
     interpreter "bash"
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
     mkdir -p node_modules
     EOH
   end
-  script "install_composer" do
+  script "npm_install" do
     interpreter "bash"
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
