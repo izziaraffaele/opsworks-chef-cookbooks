@@ -1,12 +1,6 @@
 
 node[:deploy].each do |application, deploy|
 
-  # Install dependencies using composer install
-  include_recipe 'composer::install'
-
-  # Install dependencies using composer install
-  include_recipe 'npm::install'
-
   # correct permissions to allow apache to write
   execute "chown #{deploy[:deploy_to]}/current/storage" do
       cwd "#{deploy[:deploy_to]}/current/storage"
@@ -32,4 +26,10 @@ node[:deploy].each do |application, deploy|
       cwd "#{deploy[:deploy_to]}/current"
       command "cp .env.production .env"
   end
+
+  # Install dependencies using composer install
+  include_recipe 'composer::install'
+
+  # Install dependencies using composer install
+  include_recipe 'npm::install'
 end
