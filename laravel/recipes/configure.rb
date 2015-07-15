@@ -27,6 +27,12 @@ node[:deploy].each do |application, deploy|
       command "cp .env.production .env"
   end
 
+  # Install dependencies using composer install
+  include_recipe 'composer::install'
+
+  # Install dependencies using composer install
+  include_recipe 'npm::install'
+
   execute "doctine:schema:update" do
       cwd "#{deploy[:deploy_to]}/current"
       command "vendor/bin/doctrine orm:schema:update --force"
@@ -36,10 +42,4 @@ node[:deploy].each do |application, deploy|
       cwd "#{deploy[:deploy_to]}/current"
       command "vendor/bin/doctrine orm:generate:proxies"
   end
-
-  # Install dependencies using composer install
-  include_recipe 'composer::install'
-
-  # Install dependencies using composer install
-  include_recipe 'npm::install'
 end
