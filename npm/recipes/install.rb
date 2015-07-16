@@ -17,7 +17,7 @@ node[:deploy].each do |application, deploy|
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    npm install 
+    npm install --production
     EOH
     only_if { ::File.exists?("#{deploy[:deploy_to]}/current/package.json") }
   end
