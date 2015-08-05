@@ -8,7 +8,7 @@ node[:deploy].each do |application, deploy|
     user "root"
     cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
-    supervisord
+    supervisord -c supervisord.conf
     EOH
   end
 end 
